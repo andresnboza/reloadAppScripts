@@ -6,8 +6,6 @@ from datetime import datetime
 
 import os, subprocess
 
-MONGO_URL = os.environ['MONGO_URL']
-
 # establish a connection to the database
 connection = pymongo.MongoClient(
     "mongodb+srv://andresnboza:LaVidaesBella@cluster0.doqwoff.mongodb.net/?retryWrites=true&w=majority"
@@ -24,8 +22,8 @@ def main():
     coll = db.readme
     with open(file_used, "rb") as f:
         encoded = Binary(f.read())
-    coll.update({"filename": file_used}, {"filename": file_used, "file": encoded, "updatedAt": datetime.now() }, upsert = True)
-    # coll.insert({"filename": file_used, "file": encoded, "description": "test" })
+    # coll.update({"filename": file_used}, {"filename": file_used, "file": encoded, "updatedAt": datetime.now() }, upsert = True)
+    coll.aggregate({"filename": file_used, "file": encoded, "description": "test" })
     print("\n ======>  Ending the save of the document  <======\n")
 
 

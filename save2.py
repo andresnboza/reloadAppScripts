@@ -1,31 +1,53 @@
-import pymongo
+#!/usr/bin/env python3
+#-*- coding: utf-8 -*-
+
+# import the datetime and time library
+import datetime, time
+
 import base64
 import bson
 from bson.binary import Binary
-from datetime import datetime
-import sys
-import os
 
-MONGO_URL = sys.argv[2]
-file_used = sys.argv[1]
+# import the MongoClient class of the PyMongo library
+from pymongo import MongoClient
 
-# establish a connection to the database
-connection = pymongo.MongoClient(MONGO_URL)
+# import ObjectID from MongoDB's BSON library
+# (use pip3 to install bson)
+from bson import ObjectId
 
-# get a handle to the test database
-db = connection.uploads
-file_meta = db.file_meta
+import certifi
 
-try:
-    print("\n ======>  Starting the save of the document  <======\n")
-    coll = db.readme
-    with open(file_used, "rb") as f:
-        encoded = Binary(f.read())
-    # pylint: disable=line-too-long
-    coll.find_one_and_update({"filename": file_used}, {"filename": file_used, "file": encoded, "updatedAt": datetime.now() }, upsert = True)
-    # coll.insert({"filename": file_used, "file": encoded, "description": "test" })
-    print("\n ======>  Ending the save of the document  <======\n")
-except: # pylint: disable=bare-except
-    print('ERROR')
+# create a client instance of the MongoClient class
+mongo_client = MongoClient('mongodb+srv://andresnboza:LaVidaesBella@cluster0.doqwoff.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=certifi.where())
 
-sys.exit()
+# create database and collection instances
+db = mongo_client["uploads"]
+col = db["readme"]
+
+"""
+REPLACING ALL OF A MONGODB DOCUMENT'S DATA
+USING PYMONGO'S replace_one() METHOD
+"""
+# create filter query to replace a document
+file_used = "ReadmeAppService1.md"
+query = {"file_name" : file_used }
+
+with open(file_used, "rb") as f:
+    encoded = Binary(f.read())
+
+# add "date" and "number" key-value pairs to the data
+replacement_data = {
+    "createdAt" : datetime.datetime.now(),
+    "file_name" : file_used,
+    "encoded": encoded
+}
+
+
+# pass dict objects to PyMongo's replace_one() method
+result = col.replace_one( query, replacement_data, upsert=True )
+
+# print ("raw:", result.raw_result)
+print ("acknowledged:", result.acknowledged)
+# print ("matched_count:", result.matched_count)
+
+mongo_client.close()
