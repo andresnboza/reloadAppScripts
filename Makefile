@@ -1,6 +1,6 @@
 temp:
 	@echo "\n### Executing the save of the file in the database ###\n"
-	npm run save
+	python3 save2.py ReadmeAppService1.md mongodb+srv://andresnboza:LaVidaesBella@cluster0.doqwoff.mongodb.net/?retryWrites=true&w=majority
 	@echo "\n### The file is now saved ###\n"
 
 save:
