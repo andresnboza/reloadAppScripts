@@ -18,6 +18,8 @@ from bson import ObjectId
 import certifi
 import sys
 
+print(sys.argv)
+
 file_used = sys.argv[1]
 MONGO_URI = sys.argv[2]
 
