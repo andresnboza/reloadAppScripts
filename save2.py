@@ -16,9 +16,17 @@ from pymongo import MongoClient
 from bson import ObjectId
 
 import certifi
+import sys
+
+file_used = sys.argv[1]
+MONGO_URI = sys.argv[2]
+
+print("file_used", file_used)
+print("MONGO_URI", MONGO_URI)
 
 # create a client instance of the MongoClient class
-mongo_client = MongoClient('mongodb+srv://andresnboza:LaVidaesBella@cluster0.doqwoff.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=certifi.where())
+# mongo_client = MongoClient('mongodb+srv://andresnboza:LaVidaesBella@cluster0.doqwoff.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=certifi.where())
+mongo_client = MongoClient(MONGO_URI, tlsCAFile=certifi.where())
 
 # create database and collection instances
 db = mongo_client["uploads"]
@@ -29,7 +37,7 @@ REPLACING ALL OF A MONGODB DOCUMENT'S DATA
 USING PYMONGO'S replace_one() METHOD
 """
 # create filter query to replace a document
-file_used = "ReadmeAppService1.md"
+# file_used = "ReadmeAppService1.md"
 query = {"file_name" : file_used }
 
 with open(file_used, "rb") as f:
