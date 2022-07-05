@@ -10,7 +10,7 @@ copy:
 	python3 copy.py $$FILE_NAME
 	@echo "END - Copy file"
 
-update:
+push:
 	git add .
 	git commit -m "update on the scripts"
 	git push
