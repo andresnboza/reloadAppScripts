@@ -1,3 +1,5 @@
+include .env
+
 save: python_installs save2
 
 save2:
@@ -8,6 +10,11 @@ save2:
 copy:
 	@echo "START - Copy file"
 	python3 copy.py $$FILE_NAME
+	@echo "END - Copy file"
+
+copy_local:
+	@echo "START - Copy file"
+	python3 save.py ReadmeAppService2.md ${MONGO_URI}
 	@echo "END - Copy file"
 
 push:

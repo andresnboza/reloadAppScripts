@@ -54,7 +54,7 @@ replacement_data = {
 
 
 # pass dict objects to PyMongo's replace_one() method
-result = col.replace_one( query, replacement_data, upsert=True )
+result = col.replace_one(query, replacement_data)
 
 # print ("raw:", result.raw_result)
 print ("acknowledged:", result.acknowledged)
