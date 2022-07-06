@@ -14,7 +14,7 @@ MONGO_URI = sys.argv[2]
 mongo_client = MongoClient(MONGO_URI + '', tlsCAFile=certifi.where())
 
 db = mongo_client["uploads"]
-col = db["readme"]
+col = db["readmes"]
 
 print("######" + file_used + "######")
 
