@@ -36,5 +36,5 @@ data = {
     "encoded": dict
 }
 
-col.update(key, data, upsert=True)
+col.update_one(key, data, upsert=True)
 mongo_client.close()
